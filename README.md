@@ -9,7 +9,7 @@
 ![No build step](https://img.shields.io/badge/build-none-lightgrey)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[Live demo](https://abhi1690.github.io/epss-checker/) · [Report a bug](https://github.com/Abhi1690/epss-checker/issues) · [Security policy](SECURITY.md)
+[Live demo](https://abhi1690.github.io/epss-checker/) · [Report a bug](https://github.com/Abhi1690/epss-checker/issues)
 
 </div>
 
