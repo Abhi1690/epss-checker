@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.first.org; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <title>EPSS Score Checker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>EPSS Score Checker</h1>
+    <p class="sub">Exploit Prediction Scoring System lookups via the
+      <a href="https://www.first.org/epss/api" target="_blank" rel="noopener noreferrer">FIRST.org EPSS API</a>.
+      Everything runs in your browser; no data is sent anywhere except api.first.org.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="single-h">
+      <h2 id="single-h">Single CVE lookup</h2>
+      <form id="single-form" novalidate autocomplete="off">
+        <div class="row">
+          <label for="single-cve">CVE ID</label>
+          <input id="single-cve" type="text" placeholder="CVE-2024-3400" maxlength="20" spellcheck="false" required>
+        </div>
+        <div class="row">
+          <label for="single-date">Score date (optional)</label>
+          <input id="single-date" type="date">
+        </div>
+        <button type="submit" id="single-btn">Check</button>
+      </form>
+      <p id="single-msg" class="msg" role="status" aria-live="polite"></p>
+      <div id="single-result" class="card" hidden></div>
+    </section>
+
+    <section aria-labelledby="bulk-h">
+      <h2 id="bulk-h">Bulk lookup</h2>
+      <form id="bulk-form" novalidate autocomplete="off">
+        <div class="row">
+          <label for="bulk-cves">CVE IDs, separated by commas, spaces or new lines (max <span id="bulk-max"></span>)</label>
+          <textarea id="bulk-cves" rows="8" maxlength="40000" spellcheck="false" placeholder="CVE-2024-3400&#10;CVE-2023-4966, CVE-2021-44228"></textarea>
+        </div>
+        <div class="row">
+          <label for="bulk-file">Or load a .txt / .csv file (max 1 MB)</label>
+          <input id="bulk-file" type="file" accept=".txt,.csv,text/plain,text/csv">
+        </div>
+        <div class="row">
+          <label for="bulk-date">Score date (optional)</label>
+          <input id="bulk-date" type="date">
+        </div>
+        <button type="submit" id="bulk-btn">Check all</button>
+        <button type="button" id="bulk-download" disabled>Download Excel (.xlsx)</button>
+        <button type="button" id="bulk-clear" class="secondary">Clear</button>
+      </form>
+      <p id="bulk-msg" class="msg" role="status" aria-live="polite"></p>
+      <progress id="bulk-progress" value="0" max="1" hidden></progress>
+      <div class="table-wrap">
+        <table id="bulk-table" hidden>
+          <thead>
+            <tr>
+              <th scope="col"><button type="button" data-sort="cve">CVE</button></th>
+              <th scope="col"><button type="button" data-sort="epss">EPSS</button></th>
+              <th scope="col"><button type="button" data-sort="percentile">Percentile</button></th>
+              <th scope="col"><button type="button" data-sort="date">Date</button></th>
+              <th scope="col"><button type="button" data-sort="status">Status</button></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>EPSS data &copy; <a href="https://www.first.org/epss/" target="_blank" rel="noopener noreferrer">FIRST.org</a>.
+      EPSS is the probability (0&ndash;1) of exploitation activity in the next 30 days.
+      Percentile is the share of CVEs with an equal or lower score.</p>
+  </footer>
+</body>
+</html>
